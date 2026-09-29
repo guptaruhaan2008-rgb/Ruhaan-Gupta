@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Financial Status — FINVEXA</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-black text-slate-950">F</div>
+        <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">FINVEXA</span>
+      </a>
+      <nav class="hidden md:flex space-x-6 text-sm text-slate-300">
+        <a href="/financial-status" class="text-emerald-400 font-bold">1. My Financial Status</a>
+        <a href="/find-investment" class="hover:text-emerald-400">2. Find My Investment</a>
+        <a href="/research" class="hover:text-emerald-400">3. Investment Research</a>
+        <a href="/compare" class="hover:text-emerald-400">4. Compare Investments</a>
+        <a href="/knowledge" class="hover:text-emerald-400">5. Finance Knowledge</a>
+        <a href="/source-code" class="text-cyan-400 hover:text-cyan-300 font-mono">&lt;/&gt; View Source Code</a>
+      </nav>
+      <a href="/api/demo/financial-status" class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-amber-500/30">
+        ✨ Auto-Fill Demo
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 pb-6 border-b border-slate-800 gap-4">
+      <div>
+        <h1 class="text-3xl font-extrabold text-white">1. My Financial Status</h1>
+        <p class="text-sm text-slate-400">Comprehensive educational diagnostic of income, expenses, debt, emergency reserves, and inflation resilience.</p>
+      </div>
+      <form action="/financial-status" method="POST" class="inline">
+        <button type="submit" name="autofill" value="true" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm shadow-md hover:brightness-110 flex items-center gap-2">
+          ✨ AUTO-FILL FINANCIAL PROFILE
+        </button>
+      </form>
+    </div>
+
+    <!-- Content rendered dynamically via Jinja or Flask -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Input Form -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-4">Financial Profile Inputs</h2>
+        <form method="POST" action="/financial-status" class="space-y-4 text-xs">
+          <div>
+            <label class="block text-slate-400 mb-1">Age</label>
+            <input type="number" name="age" value="{{ form.age or 28 }}" min="18" max="100" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Monthly Income (₹)</label>
+            <input type="number" name="monthly_income" value="{{ form.monthly_income or 85000 }}" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Household Expenses (₹)</label>
+            <input type="number" name="household_exp" value="{{ form.household_exp or 25000 }}" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Monthly EMI / Debt Service (₹)</label>
+            <input type="number" name="emi" value="{{ form.emi or 12000 }}" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Emergency Reserves (₹)</label>
+            <input type="number" name="emergency_fund" value="{{ form.emergency_fund or 150000 }}" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1">Existing Investments (₹)</label>
+            <input type="number" name="existing_investments" value="{{ form.existing_investments or 350000 }}" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white">
+          </div>
+          <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl transition-all">
+            Recalculate Analysis
+          </button>
+        </form>
+      </div>
+
+      <!-- Analysis Results -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Overall Classification</span>
+            <span class="px-3 py-1 rounded-full text-xs font-bold {{ result.overall_badge_class or 'bg-emerald-950/60 text-emerald-400 border border-emerald-800' }}">
+              {{ result.overall_classification or 'HEALTHY' }}
+            </span>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed">{{ result.final_explanation }}</p>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-slate-900/40 border border-slate-800/80 p-4 rounded-xl">
+            <div class="text-xs text-slate-400">Monthly Surplus</div>
+            <div class="text-lg font-bold text-white mt-1">₹{{ "{:,.0f}".format(result.monthly_surplus) if result else "48,000" }}</div>
+          </div>
+          <div class="bg-slate-900/40 border border-slate-800/80 p-4 rounded-xl">
+            <div class="text-xs text-slate-400">Savings Rate</div>
+            <div class="text-lg font-bold text-emerald-400 mt-1">{{ result.savings_rate_pct or 32.5 }}%</div>
+          </div>
+          <div class="bg-slate-900/40 border border-slate-800/80 p-4 rounded-xl">
+            <div class="text-xs text-slate-400">Debt Burden</div>
+            <div class="text-lg font-bold text-sky-400 mt-1">{{ result.debt_to_income_pct or 14.1 }}%</div>
+          </div>
+          <div class="bg-slate-900/40 border border-slate-800/80 p-4 rounded-xl">
+            <div class="text-xs text-slate-400">Emergency Buffer</div>
+            <div class="text-lg font-bold text-amber-400 mt-1">{{ result.emergency_months or 4.5 }} Mos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-8 px-4 text-center text-xs text-slate-500 space-y-1">
+    <div class="font-bold text-slate-400">FINVEXA — Understand. Analyze. Invest Smarter.</div>
+    <div>Built at the intersection of finance, data and intelligence. | Creators: Ruhaan. Nimish. Raman</div>
+    <div class="text-slate-600">Educational financial analysis platform. Past performance does not guarantee future results.</div>
+  </footer>
+</body>
+</html>

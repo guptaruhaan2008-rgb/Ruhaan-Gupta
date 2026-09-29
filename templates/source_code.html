@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FINVEXA Source Code Explorer</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-black text-slate-950">F</div>
+        <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">FINVEXA</span>
+      </a>
+      <nav class="hidden md:flex space-x-6 text-sm text-slate-300">
+        <a href="/financial-status" class="hover:text-emerald-400">1. My Financial Status</a>
+        <a href="/find-investment" class="hover:text-emerald-400">2. Find My Investment</a>
+        <a href="/research" class="hover:text-emerald-400">3. Investment Research</a>
+        <a href="/compare" class="hover:text-emerald-400">4. Compare Investments</a>
+        <a href="/knowledge" class="hover:text-emerald-400">5. Finance Knowledge</a>
+        <a href="/source-code" class="text-cyan-400 font-bold font-mono">&lt;/&gt; View Source Code</a>
+      </nav>
+      <a href="/api/download-all" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1.5">
+        📦 Download Full Source (.ZIP)
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl mx-auto px-4 py-6 w-full flex flex-col">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div>
+        <h1 class="text-2xl font-extrabold text-white flex items-center gap-2">
+          <span class="font-mono text-cyan-400">&lt;/&gt;</span> FINVEXA Source Code
+        </h1>
+        <p class="text-xs text-slate-400">Inspect the actual Python analysis modules, Flask routes, templates, datasets, and configurations.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="copyBtn" onclick="copyCurrentCode()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-700">
+          📋 Copy Code
+        </button>
+        <button id="downloadBtn" onclick="downloadCurrentFile()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-700">
+          ⬇️ Download File
+        </button>
+      </div>
+    </div>
+
+    <!-- Code Explorer Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 flex-grow">
+      <!-- File Tree Sidebar -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 overflow-y-auto max-h-[75vh]">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Project Explorer</div>
+        <div class="space-y-1 font-mono text-xs">
+          <div class="font-semibold text-slate-300 py-1">Root</div>
+          <button onclick="loadFile('app.py')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">app.py</button>
+          <button onclick="loadFile('requirements.txt')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">requirements.txt</button>
+          <button onclick="loadFile('README.md')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">README.md</button>
+
+          <div class="font-semibold text-slate-300 pt-3 py-1">analysis/</div>
+          <button onclick="loadFile('analysis/financial_status.py')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">financial_status.py</button>
+          <button onclick="loadFile('analysis/investment_finder.py')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">investment_finder.py</button>
+          <button onclick="loadFile('analysis/investment_research.py')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">investment_research.py</button>
+          <button onclick="loadFile('analysis/comparison.py')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">comparison.py</button>
+
+          <div class="font-semibold text-slate-300 pt-3 py-1">demo/</div>
+          <button onclick="loadFile('demo/auto_fill.py')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">auto_fill.py</button>
+
+          <div class="font-semibold text-slate-300 pt-3 py-1">data/</div>
+          <button onclick="loadFile('data/stocks.csv')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">stocks.csv</button>
+          <button onclick="loadFile('data/bonds.csv')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">bonds.csv</button>
+          <button onclick="loadFile('data/mutual_funds.csv')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">mutual_funds.csv</button>
+          <button onclick="loadFile('data/gold.csv')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">gold.csv</button>
+          <button onclick="loadFile('data/fds.csv')" class="file-item w-full text-left px-2 py-1 rounded text-slate-400 hover:text-emerald-400 hover:bg-slate-800/50">fds.csv</button>
+        </div>
+      </div>
+
+      <!-- Code Display Pane -->
+      <div class="md:col-span-3 bg-slate-900/60 border border-slate-800 rounded-xl overflow-hidden flex flex-col max-h-[75vh]">
+        <div class="bg-slate-900 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between text-xs">
+          <span id="activeFilename" class="font-mono text-cyan-400">app.py</span>
+          <span class="text-slate-500 font-mono" id="fileStats">Python Module</span>
+        </div>
+        <pre class="p-4 overflow-auto flex-grow text-xs font-mono"><code id="codeViewer" class="language-python"># Select a file from the explorer sidebar to view actual source code.</code></pre>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-8 px-4 text-center text-xs text-slate-500 space-y-1">
+    <div class="font-bold text-slate-400">FINVEXA — Understand. Analyze. Invest Smarter.</div>
+    <div>Built at the intersection of finance, data and intelligence. | Creators: Ruhaan. Nimish. Raman</div>
+    <div class="text-slate-600">Educational financial analysis platform. Past performance does not guarantee future results.</div>
+  </footer>
+
+  <script>
+    let currentPath = 'app.py';
+    let currentCode = '';
+
+    function loadFile(filePath) {
+      currentPath = filePath;
+      document.getElementById('activeFilename').innerText = filePath;
+      fetch('/api/source-file?path=' + encodeURIComponent(filePath))
+        .then(res => res.text())
+        .then(code => {
+          currentCode = code;
+          const codeViewer = document.getElementById('codeViewer');
+          codeViewer.innerText = code;
+          hljs.highlightElement(codeViewer);
+        })
+        .catch(err => {
+          document.getElementById('codeViewer').innerText = '// Error loading file: ' + err;
+        });
+    }
+
+    function copyCurrentCode() {
+      navigator.clipboard.writeText(currentCode || document.getElementById('codeViewer').innerText);
+      const btn = document.getElementById('copyBtn');
+      btn.innerText = '✅ Copied!';
+      setTimeout(() => btn.innerText = '📋 Copy Code', 2000);
+    }
+
+    function downloadCurrentFile() {
+      const blob = new Blob([currentCode], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = currentPath.split('/').pop();
+      a.click();
+    }
+
+    // Load app.py on initial load
+    window.addEventListener('DOMContentLoaded', () => loadFile('app.py'));
+  </script>
+</body>
+</html>

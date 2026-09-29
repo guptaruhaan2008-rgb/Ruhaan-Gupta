@@ -1,0 +1,5 @@
+security_id,security_name,tenor_type,maturity,indicative_yield_pct,interest_frequency,sovereign_backing,min_investment,suitability
+GSEC001,7.18% GS 2033 Benchmark Bond,Long Term Dated G-Sec,2033-08-14,7.09,Semi-Annual,100% Sovereign Backed,10000,"Ideal for conservative long-term wealth preservation and locking in guaranteed returns for 7-10 years."
+GSEC002,91-Day Government Treasury Bill (T-Bill),Short Term Money Market,91 Days,6.72,Discount to Face Value,100% Sovereign Backed,10000,"Zero default risk liquid parking instrument for corporate and retail surplus funds up to 3 months."
+GSEC003,364-Day Government Treasury Bill (T-Bill),Medium Term Money Market,364 Days,6.88,Discount to Face Value,100% Sovereign Backed,10000,"Superior alternative to 1-year bank fixed deposits with zero credit default probability."
+GSEC004,7.38% Maharashtra State Development Loan (SDL),State Government Bond,2034-05-18,7.35,Semi-Annual,Sovereign Guaranteed (RBI mechanism),10000,"Yield pickup of 25-35 bps over Central Government bonds with institutional safety."

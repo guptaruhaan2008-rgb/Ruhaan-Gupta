@@ -1,0 +1,6 @@
+ticker,name,benchmark_index,asset_class,current_nav,expense_ratio_pct,tracking_error_pct,aum_cr,cagr_3y_pct,liquidity_status,description
+NIFTYBEES,Nippon India ETF Nifty BeES,NIFTY 50 Index,Equity Index,272.40,0.04,0.03,24800,16.5,Very High,"Tracks India's top 50 bluechip companies; lowest expense ratio; maximum trading volume among Indian equity ETFs."
+BANKBEES,Nippon India ETF Bank BeES,NIFTY Bank Index,Banking Sector Equity,525.80,0.18,0.08,8900,14.8,High,"Direct exposure to leading private and PSU banking giants across India; high beta and cyclical upside."
+GOLDBEES,Nippon India ETF Gold BeES,Domestic Spot Gold,Precious Metals,64.20,0.45,0.12,11200,14.1,Very High,"Physical gold-backed ETF; enables buying gold starting at approximately 0.01 gram; ideal for inflation hedging."
+ITBEES,Nippon India ETF Nifty IT,NIFTY IT Index,Tech Sector Equity,42.80,0.22,0.09,3600,15.2,Moderate,"Pure-play technology sector basket tracking TCS, Infosys, HCL Tech, Wipro, and other tech software exporters."
+MON100,Motilal Oswal Nasdaq 100 ETF,NASDAQ-100 Index (USD),Global Technology Equity,154.60,0.58,0.18,7400,21.8,Moderate,"Direct international rupee exposure to top global innovators like Apple, Microsoft, Nvidia, Amazon, and Alphabet."

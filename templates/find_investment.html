@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find My Investment — FINVEXA</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-black text-slate-950">F</div>
+        <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">FINVEXA</span>
+      </a>
+      <nav class="hidden md:flex space-x-6 text-sm text-slate-300">
+        <a href="/financial-status" class="hover:text-emerald-400">1. My Financial Status</a>
+        <a href="/find-investment" class="text-emerald-400 font-bold">2. Find My Investment</a>
+        <a href="/research" class="hover:text-emerald-400">3. Investment Research</a>
+        <a href="/compare" class="hover:text-emerald-400">4. Compare Investments</a>
+        <a href="/knowledge" class="hover:text-emerald-400">5. Finance Knowledge</a>
+        <a href="/source-code" class="text-cyan-400 hover:text-cyan-300 font-mono">&lt;/&gt; View Source Code</a>
+      </nav>
+      <form action="/find-investment" method="POST" class="inline">
+        <button type="submit" name="autofill" value="true" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs shadow-md">
+          ✨ AUTO-FILL INVESTOR PROFILE
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+    <div class="mb-8 pb-6 border-b border-slate-800">
+      <h1 class="text-3xl font-extrabold text-white">2. Find My Investment</h1>
+      <p class="text-sm text-slate-400">Suitability matching across Shares, Bonds, Gold, FDs, Mutual Funds, ETFs, G-Secs, REITs, PPF, and NPS.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for item in matched_avenues %}
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-all flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-mono text-slate-500">{{ item.category }}</span>
+            <span class="text-xs px-2 py-0.5 rounded-full border {{ item.tag_class }}">{{ item.compatibility_score }}% Match</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-1">{{ item.name }}</h3>
+          <p class="text-xs text-slate-400 mb-4">{{ item.summary }}</p>
+          <div class="text-xs space-y-1 mb-4 bg-slate-950/60 p-3 rounded-lg border border-slate-800/60">
+            <div><span class="text-slate-500">Risk Level:</span> <span class="text-slate-300">{{ item.risk_level }}</span></div>
+            <div><span class="text-slate-500">Ideal Horizon:</span> <span class="text-slate-300">{{ item.ideal_horizon }}</span></div>
+            <div><span class="text-slate-500">Hist. Returns:</span> <span class="text-emerald-400 font-semibold">{{ item.historical_return_range }}</span></div>
+          </div>
+        </div>
+        <div class="pt-4 border-t border-slate-800/80">
+          <div class="text-[11px] text-slate-400 italic mb-3">{{ item.compatibility_status }}</div>
+          <a href="/research?type={{ item.id }}" class="block text-center bg-slate-800 hover:bg-slate-700 text-slate-200 py-2 rounded-lg text-xs font-semibold transition-colors">
+            Research Instrument →
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-8 px-4 text-center text-xs text-slate-500 space-y-1">
+    <div class="font-bold text-slate-400">FINVEXA — Understand. Analyze. Invest Smarter.</div>
+    <div>Built at the intersection of finance, data and intelligence. | Creators: Ruhaan. Nimish. Raman</div>
+    <div class="text-slate-600">Educational financial analysis platform. Past performance does not guarantee future results.</div>
+  </footer>
+</body>
+</html>

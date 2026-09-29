@@ -1,0 +1,6 @@
+{
+  "name": "FINVEXA - Financial Analysis & Investment Discovery",
+  "description": "Understand. Analyze. Invest Smarter. Educational financial analysis, investment research, comparison, and learning platform built by Ruhaan, Nimish, and Raman.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
